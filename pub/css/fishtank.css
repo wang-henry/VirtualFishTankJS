@@ -1,0 +1,11 @@
+#tank {
+    border-style: solid;
+    border-color: black
+}
+
+#fish {
+    height:  15%;
+    width: 15%;
+    left: 10px;
+    position: absolute;
+}
