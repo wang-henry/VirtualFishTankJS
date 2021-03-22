@@ -1,6 +1,8 @@
 #tank {
+    height: 200px;
+    width: 100px;
     border-style: solid;
-    border-color: black
+    border-color: black;
 }
 
 #fish {
