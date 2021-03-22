@@ -46,7 +46,7 @@ Tank.prototype = {
         if (!this.renderStatus) {
             window.alert("Tank not rendered!")
         }
-        const newFish = new Fish(fishPath, 0, 0, xSpeed, ySpeed, moveDelay)
+        const newFish = new Fish(fishPath, 0, 10, xSpeed, ySpeed, moveDelay)
 
         this.tankArea.append(newFish.element)
 
@@ -62,7 +62,7 @@ Tank.prototype = {
 
         log("Movement enabled for all fish!")
         for (let i = 0; i < this.fishList.length; i++) {
-            this.fishList[i].moveEnable()
+            this.fishList[i].moveEnable(this)
         }
 
     },
@@ -82,36 +82,69 @@ Tank.prototype = {
             this.fishList[i].startY = startY
 
             if (refresh === true) {
-                this.fishList[i].element.style.top = startX.toString() + 'px'
-                this.fishList[i].element.style.top = startY.toString() + 'px'
+                this.fishList[i].element.style.left = startX.toString() + 'px'
+                this.fishList[i].element.style.bottom = startY.toString() + 'px'
             }
         }
 
     }
+
+
 }
 
 // Function to move the fish
-function move(fish) {
-    fish.x += fish.xSpeed
-    fish.y += fish.ySpeed
+function move(fish, tank) {
+
+    // Tank detection left and right
+    if (fish.x <= 0) {
+        fish.right = true
+    }
+
+    if (fish.x + fish.element.width >= tank.width) {
+        fish.right = false
+    }
+
+    if (fish.right) {
+        fish.x += fish.xSpeed
+    } else {
+        fish.x -= fish.xSpeed
+    }
+
+    // Tank detection top and bottom
+    if (fish.y <= 0) {
+        fish.up = true
+    }
+
+    if (fish.y + fish.element.height >= tank.height) {
+        fish.up = false
+    }
+    if (fish.up) {
+        fish.y += fish.ySpeed
+    } else {
+        fish.y -= fish.ySpeed
+    }
 
 
     fish.element.style.left = fish.x + 'px'
-    fish.element.style.top = fish.y + 'px'
+    fish.element.style.bottom = fish.y + 'px'
     log(fish.element.style.left)
-    log(fish.element.style.top)
+    log(fish.element.style.bottom)
     log("Moving")
 }
 
 // Creates a fish for the fishtank
 function Fish(source, startX, startY, xSpeed = 10, ySpeed = 0, moveDelay = 1000) {
     // Current position of the fish
-    this.x = 0
-    this.y = 0
+    this.x = startX
+    this.y = startY
 
     // Speeds of the fish
-    this.xSpeed = 10
-    this.ySpeed = 0
+    this.xSpeed = xSpeed
+    this.ySpeed = ySpeed
+
+    //Direction
+    this.right = true
+    this.up = true
 
     // Interval timer and interval delay time
     this.moveInterval = null
@@ -122,8 +155,12 @@ function Fish(source, startX, startY, xSpeed = 10, ySpeed = 0, moveDelay = 1000)
     this.element.src = source
     this.element.id = 'fish'
 
-    this.element.style.left = startX.toString() + 'px'
-    this.element.style.top = startY.toString() + 'px'
+    //Update the starting position
+    this.element.style.left = this.x + 'px'
+    this.element.style.bottom = this.y + 'px'
+
+    log(this.element.width)
+    log(this.element.height)
 }
 
 Fish.prototype = {
@@ -133,11 +170,11 @@ Fish.prototype = {
         log(this.moveInterval)
     },
 
-    moveEnable: function () {
+    moveEnable: function (tank) {
         log(this)
         const fish = this
         this.moveInterval = setInterval(function () {
-            move(fish)
+            move(fish, tank)
         }, this.moveDelay)
     },
 
