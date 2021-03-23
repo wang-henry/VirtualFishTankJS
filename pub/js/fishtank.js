@@ -219,9 +219,10 @@ Tank.prototype = {
     },
 
     // Set positions for a fish to travel between and decide whether it should loop
-    setTravelPoints: function (index, x1, y1, x2, y2, loop = false, trail = false, loopType = 'bounce') {
-        if (x2 >= x1) {
+    setTravelPoints: function (index, x1, y1, x2, y2, loop = false, loopType = 'bounce') {
+        if (x1 >= x2) {
             log("Invalid x values! x1 must be < x2!")
+            return
         }
         const fish = this.fishList[index]
         fish.x1 = x1
@@ -232,6 +233,34 @@ Tank.prototype = {
         fish.loopType = loopType
 
         fish.movePointsEnable(this)
+    },
+
+    setTrail: function (index, color, height) {
+        const newTrail = document.createElement('div')
+        try {
+            const fish = this.fishList[index]
+            newTrail.style.background = color
+            newTrail.id = 'trail'
+            newTrail.style.height = height + 'px'
+            newTrail.style.left = fish.x1 + 'px'
+
+            //TODO Fix the y coordinates
+            newTrail.style.bottom = fish.y1 + 'px'
+
+            fish.trailEnable = true
+            fish.trail = newTrail
+        } catch (e) {
+            log("Please enter a valid trail color and index!")
+            return
+        }
+
+        this.tankArea.append(newTrail)
+        log('Set new trail!')
+    },
+
+    removeTrail: function (index) {
+        this.trail = null
+        this.trailEnable = false
     }
 
 }
@@ -242,8 +271,6 @@ Tank.prototype = {
 // }
 function movePoints(fish, tank) {
     // Tank detection left and right
-
-
     if (fish.loopType === 'bounce') {
         if (fish.x <= fish.x1) {
             fish.right = true
@@ -287,6 +314,10 @@ function movePoints(fish, tank) {
         fish.x += fish.xSpeed
     } else {
         fish.x -= fish.xSpeed
+    }
+
+    if(fish.trailEnable){
+        fish.trail.style.width = fish.x + 'px'
     }
 
     // // Tank detection top and bottom
@@ -365,14 +396,20 @@ function Fish(source, startX, startY, xSpeed = 10, ySpeed = 0, moveDelay = 1000)
     this.xSpeed = xSpeed
     this.ySpeed = ySpeed
 
+    // ------------------------
+    // Custom path properties
+    // ------------------------
     // travel points (if specified)
     this.x1 = null
     this.y1 = null
     this.x2 = null
     this.y2 = null
 
+    this.trailEnable = false
+    this.trail = null
     this.loopEnable = false
-    this.loopType = null
+    this.loopType = 'normal'
+    // ------------------------
     // Boolean for whether the fish is using a custom animation
     this.customAnimation = false
 
