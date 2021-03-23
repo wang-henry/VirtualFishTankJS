@@ -115,6 +115,21 @@ Tank.prototype = {
         }
     },
 
+    // Adds text to fish tank
+    addText: function (text, x, y) {
+        const textDiv = document.createElement('div')
+        textDiv.id = 'textDiv'
+        textDiv.style.left = x + 'px'
+        textDiv.style.bottom = y + 'px'
+
+        const textNode = document.createElement('text')
+        textNode.innerHTML = text
+
+
+        textDiv.append(textNode)
+        this.tankArea.append(textDiv)
+    },
+
     // ----------------------------------------------------
     // Functions that manipulates ALL the fish in the tank
     // ----------------------------------------------------
@@ -201,6 +216,12 @@ Tank.prototype = {
 
     updateHeight: function (index, height) {
         this.fishList[index].element.style.height = height
+    },
+
+    // Set positions for a fish to travel between and decide whether it should loop
+    setTravelPoints: function (index, x1, y1, x2, y2, loop = false) {
+        const fish = this.fishList[index]
+        
     }
 }
 
