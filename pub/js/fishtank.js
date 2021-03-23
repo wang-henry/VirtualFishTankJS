@@ -4,7 +4,9 @@ const log = console.log;
 
 const fishImage = 'assets/fish.svg'
 
-function Tank(width = 100, height = 100, percentScale = true) {
+// Create a fish tank with the given width and height (% or px depending on percentScale bool
+// attach to div or body by default
+function Tank(width = 100, height = 100, percentScale = true, div = 'body') {
     // Defines whether the size of the tank should be in px or %
     this.percentScale = percentScale
 
@@ -14,11 +16,17 @@ function Tank(width = 100, height = 100, percentScale = true) {
 
     this.tankArea = null
     this.renderStatus = false
+
+    // Div that the fish tank should be a child of
+    this.div = div
+    // Visual properties of the tank
+    this.color = 'cornflowerblue'
     // Array containing all the fish in the tank
     this.fishList = []
 }
 
 Tank.prototype = {
+    // Render the tank
     renderTank: function () {
         this.renderStatus = true
 
@@ -36,12 +44,41 @@ Tank.prototype = {
             tankDiv.style.width = this.width.toString() + 'px'
         }
 
-        const body = document.querySelector('body')
-        body.append(tankDiv)
+        if (this.div === 'body') {
+            const body = document.querySelector(this.div)
+            body.append(tankDiv)
+        } else {
+            try {
+                const divID = document.getElementById(this.div)
+                divID.append(tankDiv)
+            } catch (e) {
+                window.alert("Invalid div ID!")
+            }
+        }
+    },
+
+    // --------------------------------------------------
+    // Functions that manipulate fish tank itself
+    // --------------------------------------------------
+
+    // Change the water color
+    changeWater: function (color) {
+        log(this.tankArea)
+        this.tankArea.style.background = color
+    },
+
+    // Change the tank border color
+    changeBorder: function (color) {
+        this.tankArea.style['border-color'] = color
+    },
+
+    // Change the tank border style
+    changeStyle: function (style) {
+        this.tankArea.style['border-style'] = style
     },
 
     // Adds a fish to the tank from the img path "fish_path"
-    addFish: function (fishPath, xSpeed, ySpeed, moveDelay) {
+    addFish: function (fishPath, startX, startY, xSpeed, ySpeed, moveDelay) {
         // Check that the tank is rendered
         if (!this.renderStatus) {
             window.alert("Tank not rendered!")
@@ -55,6 +92,9 @@ Tank.prototype = {
         log("Added fish to tank! " + this.fishList.length + " fish currently in tank.")
     },
 
+    // ----------------------------------------------------
+    // Functions that manipulates ALL the fish in the tank
+    // ----------------------------------------------------
     enableAllMove: function () {
         if (!this.renderStatus) {
             window.alert("Tank not rendered!")
@@ -75,7 +115,6 @@ Tank.prototype = {
         }
     },
 
-
     updateAllStartPos: function (startX, startY, refresh = false) {
         for (let i = 0; i < this.fishList.length; i++) {
             this.fishList[i].startX = startX
@@ -86,22 +125,86 @@ Tank.prototype = {
                 this.fishList[i].element.style.bottom = startY.toString() + 'px'
             }
         }
+    },
 
+    // Flips all horizontal orientation
+    updateAllHOrientation: function () {
+        for (let i = 0; i < this.fishList.length; i++) {
+            this.fishList[i].orientationRight = !this.fishList[i].orientationRight
+            log("Updated all Horizontal fish orientations!")
+        }
+    },
+
+    // Flips all vertical orientation
+    updateAllVOrientation: function () {
+        for (let i = 0; i < this.fishList.length; i++) {
+            this.fishList[i].orientationUp = !this.fishList[i].orientationUp
+            log("Updated all Vertical fish orientations!")
+        }
+    },
+
+    changeAllBehavior: function (behavior) {
+        // Default behavior, fish just move around in the tank
+        if (behavior === 'default') {
+            for (let i = 0; i < this.fishList.length; i++) {
+                this.fishList[i].behavior = 'default'
+            }
+        }
+        // Fish will avoid the mouse
+        else if (behavior === 'avoid') {
+            for (let i = 0; i < this.fishList.length; i++) {
+                this.fishList[i].behavior = 'avoid'
+            }
+        } else {
+            log("Invalid behavior please enter: 'default', 'avoid'")
+        }
+    },
+
+    // ----------------------------------------------------
+    // Functions that manipulates a single fish in the tank
+    // index are in order the fish were added in
+    // ----------------------------------------------------
+    updateHOrientation: function (index) {
+        this.fishList[index].orientationRight = !this.fishList[index].orientationRight
+    },
+
+    updateVOrientation: function (index) {
+        this.fishList[index].orientationUp = !this.fishList[index].orientationUp
+    },
+
+    updateWidth: function (index, width) {
+        this.fishList[index].element.style.width = width
+    },
+
+    updateHeight: function (index, height) {
+        this.fishList[index].element.style.height = height
     }
-
-
 }
+
+// Get user mouse coordinates
+// function getMouse(event){
+//     return (event.clientX, event.clientY)
+// }
 
 // Function to move the fish
 function move(fish, tank) {
-
     // Tank detection left and right
     if (fish.x <= 0) {
         fish.right = true
+        if (fish.orientationRight) {
+            fish.element.style.transform = 'scaleX(1)';
+        } else {
+            fish.element.style.transform = 'scaleX(-1)';
+        }
     }
 
     if (fish.x + fish.element.width >= tank.width) {
         fish.right = false
+        if (fish.orientationRight) {
+            fish.element.style.transform = 'scaleX(-1)';
+        } else {
+            fish.element.style.transform = 'scaleX(1)';
+        }
     }
 
     if (fish.right) {
@@ -127,9 +230,6 @@ function move(fish, tank) {
 
     fish.element.style.left = fish.x + 'px'
     fish.element.style.bottom = fish.y + 'px'
-    log(fish.element.style.left)
-    log(fish.element.style.bottom)
-    log("Moving")
 }
 
 // Creates a fish for the fishtank
@@ -141,6 +241,14 @@ function Fish(source, startX, startY, xSpeed = 10, ySpeed = 0, moveDelay = 1000)
     // Speeds of the fish
     this.xSpeed = xSpeed
     this.ySpeed = ySpeed
+
+    // Behavior of the fish
+    this.behavior = 'default'
+
+    // Boolean to reverse orientation for flipping, by default it is assumed the fish forward is to the right and is not
+    // upsidedown
+    this.orientationRight = true
+    this.orientationUp = true
 
     //Direction
     this.right = true
