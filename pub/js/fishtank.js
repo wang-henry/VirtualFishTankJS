@@ -228,6 +228,7 @@ Tank.prototype = {
         fish.y1 = y1
         fish.x2 = x2
         fish.y2 = y2
+        fish.loopEnable = loop
         fish.loopType = loopType
 
         fish.movePointsEnable(this)
@@ -269,6 +270,10 @@ function movePoints(fish, tank) {
         }
 
         if (fish.x + fish.element.width >= fish.x2) {
+            if (!fish.loopEnable) {
+                fish.moveDisable()
+                return
+            }
             fish.right = true
             fish.x = fish.x1
         }
@@ -366,6 +371,7 @@ function Fish(source, startX, startY, xSpeed = 10, ySpeed = 0, moveDelay = 1000)
     this.x2 = null
     this.y2 = null
 
+    this.loopEnable = false
     this.loopType = null
     // Boolean for whether the fish is using a custom animation
     this.customAnimation = false
