@@ -86,7 +86,7 @@ Tank.prototype = {
         if (!this.renderStatus) {
             window.alert("Tank not rendered!")
         }
-        const newFish = new Fish(fishPath, 0, 10, xSpeed, ySpeed, moveDelay)
+        const newFish = new Fish(fishPath, startX, startY, xSpeed, ySpeed, moveDelay)
 
         this.tankArea.append(newFish.element)
 
@@ -201,7 +201,7 @@ Tank.prototype = {
     // ----------------------------------------------------
     // Functions that manipulates a single fish in the tank
     // index are in order the fish were added in
-    // ----------------------------------------------------
+    // ----------------------------------------------------\
     updateHOrientation: function (index) {
         this.fishList[index].orientationRight = !this.fishList[index].orientationRight
     },
@@ -219,18 +219,92 @@ Tank.prototype = {
     },
 
     // Set positions for a fish to travel between and decide whether it should loop
-    setTravelPoints: function (index, x1, y1, x2, y2, loop = false, trail = false) {
+    setTravelPoints: function (index, x1, y1, x2, y2, loop = false, trail = false, loopType = 'bounce') {
+        if (x2 >= x1) {
+            log("Invalid x values! x1 must be < x2!")
+        }
         const fish = this.fishList[index]
+        fish.x1 = x1
+        fish.y1 = y1
+        fish.x2 = x2
+        fish.y2 = y2
+        fish.loopType = loopType
 
+        fish.movePointsEnable(this)
     }
+
 }
 
 // Get user mouse coordinates
 // function getMouse(event){
 //     return (event.clientX, event.clientY)
 // }
+function movePoints(fish, tank) {
+    // Tank detection left and right
+
+
+    if (fish.loopType === 'bounce') {
+        if (fish.x <= fish.x1) {
+            fish.right = true
+            if (fish.orientationRight) {
+                fish.element.style.transform = 'scaleX(1)';
+            } else {
+                fish.element.style.transform = 'scaleX(-1)';
+            }
+        }
+
+        if (fish.x + fish.element.width >= fish.x2) {
+            fish.right = false
+            if (fish.orientationRight) {
+                fish.element.style.transform = 'scaleX(-1)';
+            } else {
+                fish.element.style.transform = 'scaleX(1)';
+            }
+        }
+    } else if (fish.loopType === 'normal') {
+        if (fish.orientationRight) {
+            fish.element.style.transform = 'scaleX(1)';
+        } else {
+            fish.element.style.transform = 'scaleX(-1)';
+        }
+
+        if (fish.x + fish.element.width >= fish.x2) {
+            fish.right = true
+            fish.x = fish.x1
+        }
+    } else {
+        log("Invalid loopType!")
+        return
+    }
+
+
+    if (fish.right) {
+        fish.x += fish.xSpeed
+    } else {
+        fish.x -= fish.xSpeed
+    }
+
+    // // Tank detection top and bottom
+    // if (fish.y <= 0) {
+    //     fish.up = true
+    // }
+    //
+    // if (fish.y + fish.element.height >= tank.height) {
+    //     fish.up = false
+    // }
+    // if (fish.up) {
+    //     fish.y += fish.ySpeed
+    // } else {
+    //     fish.y -= fish.ySpeed
+    // }
+
+
+    fish.element.style.left = fish.x + 'px'
+    // fish.element.style.bottom = fish.y + 'px'
+}
 
 // Function to move the fish
+
 function move(fish, tank) {
     // Tank detection left and right
     if (fish.x <= 0) {
@@ -286,6 +360,16 @@ function Fish(source, startX, startY, xSpeed = 10, ySpeed = 0, moveDelay = 1000)
     this.xSpeed = xSpeed
     this.ySpeed = ySpeed
 
+    // travel points (if specified)
+    this.x1 = null
+    this.y1 = null
+    this.x2 = null
+    this.y2 = null
+
+    this.loopType = null
+    // Boolean for whether the fish is using a custom animation
+    this.customAnimation = false
+
     // Behavior of the fish
     this.behavior = 'default'
 
@@ -317,7 +401,6 @@ function Fish(source, startX, startY, xSpeed = 10, ySpeed = 0, moveDelay = 1000)
 
 Fish.prototype = {
     moveEnable: function (tank) {
-        log(this)
         const fish = this
         this.moveInterval = setInterval(function () {
             move(fish, tank)
@@ -325,7 +408,19 @@ Fish.prototype = {
     },
 
     moveDisable: function () {
+        clearInterval(this.moveInterval)
         this.moveInterval = null
+    },
+
+    // Make the fish move between two predefined points
+    movePointsEnable: function (tank) {
+        // Clear any other movement timers
+        this.moveDisable()
+
+        const fish = this
+        this.moveInterval = setInterval(function () {
+            movePoints(fish, tank)
+        }, this.moveDelay)
     }
 }
 

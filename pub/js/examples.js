@@ -38,3 +38,19 @@ t3.addFish('assets/fish.svg', 0, 40, 20, 10, 50)
 t3.addFish('assets/fish.svg', 0, 60, 5, 5, 20)
 t3.updateAllHOrientation()
 t3.enableAllMove()
+
+// First fish tank example 1000 x 300 scale
+const t4 = new Tank(1000, 300, false, 'tank4');
+t4.renderTank()
+t4.addStationaryObj('assets/rock.svg', 0, 0, '70px', '70px')
+t4.addStationaryObj('assets/rock.svg', 900, 0, '100px', '100px')
+t4.addStationaryObj('assets/rock.svg', 500, 0, '50px', '100px')
+t4.addStationaryObj('assets/seaweed.svg', 500, 0, '100px', '100px')
+t4.addStationaryObj('assets/seaweed.svg', 100, 0, '100px', '200px')
+t4.addFish('assets/fish.svg', 0, 100, 5, 0, 100)
+
+t4.setTravelPoints(0, 50, 50, 400, 50, true, true, 'normal')
+t4.updateHOrientation(0)
+
+t4.addText("<h1>You can also add custom text in the tank<h1>", 200, 200)
+t4.enableAllMove()
