@@ -23,6 +23,9 @@ function Tank(width = 100, height = 100, percentScale = true, div = 'body') {
     this.color = 'cornflowerblue'
     // Array containing all the fish in the tank
     this.fishList = []
+
+    // Array containing stationary objects
+    this.tankObjects = []
 }
 
 Tank.prototype = {
@@ -89,7 +92,27 @@ Tank.prototype = {
 
         // Push new fish to array
         this.fishList.push(newFish)
-        log("Added fish to tank! " + this.fishList.length + " fish currently in tank.")
+        log("Added fish to tank! " + this.fishList.length + " fish currently in tank. Index #: " + (this.fishList.length - 1))
+    },
+
+    // Adds a stationary object to the fish tank
+    addStationaryObj: function (imgPath, x, y, objW, objH) {
+        if (!this.renderStatus) {
+            window.alert("Tank not rendered!")
+        }
+
+        if (x < 0 || x > this.width || y < 0 || y > this.height) {
+            log("Position outside of tank! Object not added!")
+
+        } else {
+            const newObject = new StationaryObject(imgPath, x, y, objW, objH)
+            this.tankArea.append(newObject.element)
+
+
+            // Push new stationary object onto array
+            this.tankObjects.push(newObject)
+            log("Added new object to tank!" + this.tankObjects.length + " objects currently in tank. Index #: " + (this.tankObjects.length - 1))
+        }
     },
 
     // ----------------------------------------------------
@@ -272,12 +295,6 @@ function Fish(source, startX, startY, xSpeed = 10, ySpeed = 0, moveDelay = 1000)
 }
 
 Fish.prototype = {
-    test: function () {
-        log("TESTING")
-        log(this.moveDelay)
-        log(this.moveInterval)
-    },
-
     moveEnable: function (tank) {
         log(this)
         const fish = this
@@ -291,3 +308,21 @@ Fish.prototype = {
     }
 }
 
+//Creates a stationary object in the fish tank
+function StationaryObject(source, x, y, width, height) {
+    this.x = x
+    this.y = y
+
+    // DOM elements of the stationary object
+    this.element = document.createElement('img')
+    this.element.id = 'stationaryObj'
+
+    this.element.src = source
+    this.element.style.width = width
+    this.element.style.height = height
+
+    // Update position in DOM
+    this.element.style.left = this.x + 'px'
+    this.element.style.bottom = this.y + 'px'
+
+}

@@ -3,6 +3,8 @@
 
 const t1 = new Tank(1000, 300, false, 'tank1');
 t1.renderTank()
+t1.addStationaryObj('assets/rock.svg', 0, 0, '70px', '70px')
+t1.addStationaryObj('assets/rock.svg', 900, 0, '100px', '100px')
 t1.addFish('assets/fish.svg', 0, 0, 20, 0, 50)
 t1.updateAllHOrientation()
 t1.enableAllMove()
