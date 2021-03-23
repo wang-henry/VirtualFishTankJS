@@ -7,7 +7,7 @@ const app = express();
 
 const path = require('path');
 
-app.use(express.static(path.join(__dirname, '/pub')))
+app.use(express.static(__dirname, '/pub'))
 
 
 const port = process.env.PORT || 5000

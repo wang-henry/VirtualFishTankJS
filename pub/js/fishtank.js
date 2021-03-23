@@ -219,9 +219,9 @@ Tank.prototype = {
     },
 
     // Set positions for a fish to travel between and decide whether it should loop
-    setTravelPoints: function (index, x1, y1, x2, y2, loop = false) {
+    setTravelPoints: function (index, x1, y1, x2, y2, loop = false, trail = false) {
         const fish = this.fishList[index]
-        
+
     }
 }
 
