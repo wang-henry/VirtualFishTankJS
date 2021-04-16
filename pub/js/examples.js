@@ -2,7 +2,7 @@
 "use strict";
 
 // First fish tank example 1000 x 300 scale
-const t1 = new Tank(1000, 300, 'tank1');
+const t1 = new Tank(1000, 300, document.getElementById('tank1'));
 t1.renderTank()
 t1.addStationaryObj('assets/rock.svg', 0, 0, '70px', '70px')
 t1.addStationaryObj('assets/rock.svg', 900, 0, '100px', '100px')
@@ -15,7 +15,7 @@ t1.updateAllHOrientation()
 t1.enableAllMove()
 
 // Second fish tank
-const t2 = new Tank(300, 300, 'tank2');
+const t2 = new Tank(300, 300, document.getElementById('tank2'));
 t2.renderTank()
 t2.addFish('assets/fish.svg', 0, 0, 20, 0, 50)
 t2.addFish('assets/redFish.svg', 50, 50, 10, 10, 50)
@@ -30,7 +30,7 @@ t2.changeBorder('blue')
 
 
 // Third fishtank
-const t3 = new Tank(1000, 300, 'tank3');
+const t3 = new Tank(1000, 300, document.getElementById('tank3'));
 t3.renderTank()
 t3.addFish('assets/fish.svg', 0, 20, 40, 0, 20)
 t3.addFish('assets/fish.svg', 0, 40, 20, 10, 20)
@@ -40,7 +40,7 @@ t3.updateAllHOrientation()
 t3.enableAllMove()
 
 // First fish tank example 1000 x 300 scale
-const t4 = new Tank(1000, 300, 'tank4');
+const t4 = new Tank(1000, 300, document.getElementById('tank4'));
 t4.renderTank()
 t4.addStationaryObj('assets/rock.svg', 0, 0, '70px', '70px')
 t4.addStationaryObj('assets/rock.svg', 900, 0, '100px', '100px')

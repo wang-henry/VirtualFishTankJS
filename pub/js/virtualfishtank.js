@@ -6,7 +6,7 @@ const fishImage = 'assets/fish.svg'
 
 // Create a fish tank with the given width and height (% or px depending on percentScale bool
 // attach to div or body by default
-function Tank(width = 100, height = 100,  div = 'body') {
+function Tank(width = 100, height = 100, div) {
     // Defines whether the size of the tank should be in px or %
 
     // Width and height of the tank
@@ -42,18 +42,7 @@ Tank.prototype = {
         tankDiv.style.height = this.height.toString() + 'px'
         tankDiv.style.width = this.width.toString() + 'px'
 
-
-        if (this.div === 'body') {
-            const body = document.querySelector(this.div)
-            body.append(tankDiv)
-        } else {
-            try {
-                const divID = document.getElementById(this.div)
-                divID.append(tankDiv)
-            } catch (e) {
-                window.alert("Invalid div ID!")
-            }
-        }
+        this.div.append(tankDiv)
     },
 
     // --------------------------------------------------
