@@ -6,9 +6,8 @@ const fishImage = 'assets/fish.svg'
 
 // Create a fish tank with the given width and height (% or px depending on percentScale bool
 // attach to div or body by default
-function Tank(width = 100, height = 100, percentScale = true, div = 'body') {
+function Tank(width = 100, height = 100,  div = 'body') {
     // Defines whether the size of the tank should be in px or %
-    this.percentScale = percentScale
 
     // Width and height of the tank
     this.width = width
@@ -39,13 +38,10 @@ Tank.prototype = {
         this.tankArea = tankDiv
 
         // Adjust the scale accordingly
-        if (this.percentScale) {
-            tankDiv.style.height = this.height.toString() + '%'
-            tankDiv.style.width = this.width.toString() + '%'
-        } else {
-            tankDiv.style.height = this.height.toString() + 'px'
-            tankDiv.style.width = this.width.toString() + 'px'
-        }
+
+        tankDiv.style.height = this.height.toString() + 'px'
+        tankDiv.style.width = this.width.toString() + 'px'
+
 
         if (this.div === 'body') {
             const body = document.querySelector(this.div)
@@ -316,7 +312,7 @@ function movePoints(fish, tank) {
         fish.x -= fish.xSpeed
     }
 
-    if(fish.trailEnable){
+    if (fish.trailEnable) {
         fish.trail.style.width = fish.x + 'px'
     }
 
