@@ -373,6 +373,62 @@
         fish.element.style.bottom = fish.y + 'px'
     }
 
+    function controlFish(fish, tank) {
+        // Right
+        if (fish.rightKey && fish.x + fish.element.width + fish.xSpeed <= tank.width) {
+            fish.x += fish.xSpeed
+            fish.right = true
+            if (fish.orientationRight) {
+                fish.element.style.transform = 'scaleX(1)';
+            } else {
+                fish.element.style.transform = 'scaleX(-1)';
+            }
+        }
+        // Left
+        if (fish.leftKey && fish.x - fish.xSpeed >= 0) {
+            fish.x -= fish.xSpeed
+            fish.right = false
+            if (fish.orientationRight) {
+                fish.element.style.transform = 'scaleX(-1)';
+            } else {
+                fish.element.style.transform = 'scaleX(1)';
+            }
+        }
+
+        // Up
+        if (fish.upKey && fish.y + fish.element.height + fish.ySpeed <= tank.height) {
+            fish.y += fish.ySpeed
+        }
+
+        // Down
+        if (fish.downKey && fish.y - fish.ySpeed >= 0) {
+            fish.y -= fish.ySpeed
+        }
+
+
+        fish.element.style.left = fish.x + 'px'
+        fish.element.style.bottom = fish.y + 'px'
+
+        // Tank detection left and right
+        if (fish.x <= 0) {
+            fish.right = true
+            if (fish.orientationRight) {
+                fish.element.style.transform = 'scaleX(1)';
+            } else {
+                fish.element.style.transform = 'scaleX(-1)';
+            }
+        }
+
+        if (fish.x + fish.element.width >= tank.width) {
+            fish.right = false
+            if (fish.orientationRight) {
+                fish.element.style.transform = 'scaleX(-1)';
+            } else {
+                fish.element.style.transform = 'scaleX(1)';
+            }
+        }
+    }
+
 
     // Creates a fish for the fishtank
     function Fish(source, startX, startY, xSpeed = 10, ySpeed = 0, moveDelay = 1000, tank, controlled) {
@@ -439,8 +495,7 @@
         if (this.controlled) {
             document.onkeydown = (e) => this.keyDown(e, this);
             document.onkeyup = (e) => this.keyUp(e, this);
-            // document.onkeydown = (e) => this.controlFish(e, this, this.tank);
-            // document.onkeyup = (e) => this.controlFish(e, this, this.tank);
+            this.keyTimer()
         }
 
         //Update the starting position
@@ -469,7 +524,6 @@
             if (key === fish.leftBind) {
                 this.leftKey = true
             }
-            this.controlFish(fish, fish.tank)
         },
 
         keyUp(e, fish) {
@@ -489,52 +543,14 @@
             if (key === fish.leftBind) {
                 this.leftKey = false
             }
-            if (this.upKey || this.leftKey || this.rightKey || this.downKey) {
-                this.controlFish(fish, fish.tank)
-            }
         },
-        controlFish(fish, tank) {
-            // Right
-            if (this.rightKey && fish.x + fish.element.width + fish.xSpeed <= tank.width) {
-                fish.x += fish.xSpeed
-            }
-            // Left
-            if (this.leftKey && fish.x - fish.xSpeed >= 0) {
-                fish.x -= fish.xSpeed
-            }
 
-            // Up
-            if (this.upKey) {
-                fish.y += fish.ySpeed
-            }
-
-            // Down
-            if (this.downKey) {
-                fish.y -= fish.ySpeed
-            }
-
-
-            fish.element.style.left = fish.x + 'px'
-            fish.element.style.bottom = fish.y + 'px'
-
-            // Tank detection left and right
-            if (fish.x <= 0) {
-                fish.right = true
-                if (fish.orientationRight) {
-                    fish.element.style.transform = 'scaleX(1)';
-                } else {
-                    fish.element.style.transform = 'scaleX(-1)';
-                }
-            }
-
-            if (fish.x + fish.element.width >= tank.width) {
-                fish.right = false
-                if (fish.orientationRight) {
-                    fish.element.style.transform = 'scaleX(-1)';
-                } else {
-                    fish.element.style.transform = 'scaleX(1)';
-                }
-            }
+        keyTimer: function () {
+            const fish = this
+            const tank = this.tank
+            this.moveInterval = setInterval(function () {
+                controlFish(fish, tank)
+            }, this.moveDelay)
         },
 
         moveEnable: function (tank) {
@@ -556,6 +572,10 @@
 
         // Make the fish move between two predefined points
         movePointsEnable: function (tank) {
+            if (this.controlled) {
+                log("Cannot move enable user controlled fish!")
+                return
+            }
             // Clear any other movement timers
             this.moveDisable()
 
