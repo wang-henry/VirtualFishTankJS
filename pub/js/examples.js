@@ -9,10 +9,10 @@ t1.addStationaryObj('assets/rock.svg', 900, 0, '100px', '100px')
 t1.addStationaryObj('assets/rock.svg', 500, 0, '50px', '100px')
 t1.addStationaryObj('assets/seaweed.svg', 500, 0, '100px', '100px')
 t1.addStationaryObj('assets/seaweed.svg', 100, 0, '100px', '200px')
-t1.addFish('assets/fish.svg', 0, 0, 20, 0, 50)
+t1.addFish('assets/fish.svg', 0, 0, 20, 20, 50, true)
 t1.addText("<h1>You can also add custom text in the tank<h1>", 200, 200)
 t1.updateAllHOrientation()
-t1.enableAllMove()
+// t1.enableAllMove()
 
 // Second fish tank
 const t2 = new Tank(300, 300, document.getElementById('tank2'));

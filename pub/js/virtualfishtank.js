@@ -68,12 +68,12 @@
         },
 
         // Adds a fish to the tank from the img path "fish_path"
-        addFish: function (fishPath, startX, startY, xSpeed, ySpeed, moveDelay) {
+        addFish: function (fishPath, startX, startY, xSpeed, ySpeed, moveDelay, controlled = false) {
             // Check that the tank is rendered
             if (!this.renderStatus) {
                 window.alert("Tank not rendered!")
             }
-            const newFish = new Fish(fishPath, startX, startY, xSpeed, ySpeed, moveDelay)
+            const newFish = new Fish(fishPath, startX, startY, xSpeed, ySpeed, moveDelay, this, controlled)
 
             this.tankArea.append(newFish.element)
 
@@ -326,7 +326,7 @@
         // fish.element.style.bottom = fish.y + 'px'
     }
 
-// Function to move the fish
+    // Function to move the fish
 
     function move(fish, tank) {
         // Tank detection left and right
@@ -373,8 +373,9 @@
         fish.element.style.bottom = fish.y + 'px'
     }
 
-// Creates a fish for the fishtank
-    function Fish(source, startX, startY, xSpeed = 10, ySpeed = 0, moveDelay = 1000) {
+
+    // Creates a fish for the fishtank
+    function Fish(source, startX, startY, xSpeed = 10, ySpeed = 0, moveDelay = 1000, tank, controlled) {
         // Current position of the fish
         this.x = startX
         this.y = startY
@@ -383,6 +384,21 @@
         this.xSpeed = xSpeed
         this.ySpeed = ySpeed
 
+        // Whether the fish should be controller with arrow keys
+        this.controlled = controlled
+
+        // Boolean status of if keys are pressed
+        this.downKey = false
+        this.upKey = false
+        this.rightKey = false
+        this.leftKey = false
+
+        this.downBind = 's'
+        this.upBind = 'w'
+        this.rightBind = 'd'
+        this.leftBind = 'a'
+        // Tank the fish is a part of
+        this.tank = tank
         // ------------------------
         // Custom path properties
         // ------------------------
@@ -420,6 +436,12 @@
         this.element = document.createElement('img')
         this.element.src = source
         this.element.id = 'fish'
+        if (this.controlled) {
+            document.onkeydown = (e) => this.keyDown(e, this);
+            document.onkeyup = (e) => this.keyUp(e, this);
+            // document.onkeydown = (e) => this.controlFish(e, this, this.tank);
+            // document.onkeyup = (e) => this.controlFish(e, this, this.tank);
+        }
 
         //Update the starting position
         this.element.style.left = this.x + 'px'
@@ -430,7 +452,97 @@
     }
 
     Fish.prototype = {
+        keyDown(e, fish) {
+            const key = e.key
+            if (key === fish.upBind) {
+                this.upKey = true
+            }
+
+            if (key === fish.downBind) {
+                this.downKey = true
+            }
+
+            if (key === fish.rightBind) {
+                this.rightKey = true
+            }
+
+            if (key === fish.leftBind) {
+                this.leftKey = true
+            }
+            this.controlFish(fish, fish.tank)
+        },
+
+        keyUp(e, fish) {
+            const key = e.key
+            if (key === fish.upBind) {
+                this.upKey = false
+            }
+
+            if (key === fish.downBind) {
+                this.downKey = false
+            }
+
+            if (key === fish.rightBind) {
+                this.rightKey = false
+            }
+
+            if (key === fish.leftBind) {
+                this.leftKey = false
+            }
+            if (this.upKey || this.leftKey || this.rightKey || this.downKey) {
+                this.controlFish(fish, fish.tank)
+            }
+        },
+        controlFish(fish, tank) {
+            // Right
+            if (this.rightKey && fish.x + fish.element.width + fish.xSpeed <= tank.width) {
+                fish.x += fish.xSpeed
+            }
+            // Left
+            if (this.leftKey && fish.x - fish.xSpeed >= 0) {
+                fish.x -= fish.xSpeed
+            }
+
+            // Up
+            if (this.upKey) {
+                fish.y += fish.ySpeed
+            }
+
+            // Down
+            if (this.downKey) {
+                fish.y -= fish.ySpeed
+            }
+
+
+            fish.element.style.left = fish.x + 'px'
+            fish.element.style.bottom = fish.y + 'px'
+
+            // Tank detection left and right
+            if (fish.x <= 0) {
+                fish.right = true
+                if (fish.orientationRight) {
+                    fish.element.style.transform = 'scaleX(1)';
+                } else {
+                    fish.element.style.transform = 'scaleX(-1)';
+                }
+            }
+
+            if (fish.x + fish.element.width >= tank.width) {
+                fish.right = false
+                if (fish.orientationRight) {
+                    fish.element.style.transform = 'scaleX(-1)';
+                } else {
+                    fish.element.style.transform = 'scaleX(1)';
+                }
+            }
+        },
+
         moveEnable: function (tank) {
+            if (this.controlled) {
+                log("Cannot move enable user controlled fish!")
+                return
+            }
+
             const fish = this
             this.moveInterval = setInterval(function () {
                 move(fish, tank)
@@ -454,7 +566,7 @@
         }
     }
 
-//Creates a stationary object in the fish tank
+    //Creates a stationary object in the fish tank
     function StationaryObject(source, x, y, width, height) {
         this.x = x
         this.y = y
