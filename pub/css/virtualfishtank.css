@@ -3,6 +3,7 @@
     border-color: black;
     position: relative;
     background: cornflowerblue;
+    display: inline-block;
 }
 
 #fish {
