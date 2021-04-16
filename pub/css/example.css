@@ -6,3 +6,13 @@
     width: 50%;
     margin: 0 auto;
 }
+
+.textBlock{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.desc{
+    font-size: 20px;
+    font-family: sans-serif;
+}

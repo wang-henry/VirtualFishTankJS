@@ -6,8 +6,8 @@
 
     const fishImage = 'assets/fish.svg'
 
-// Create a fish tank with the given width and height (% or px depending on percentScale bool
-// attach to div or body by default
+    // Create a fish tank with the given width and height (% or px depending on percentScale bool
+    // attach to div or body by default
     function Tank(width = 100, height = 100, div) {
         // Defines whether the size of the tank should be in px or %
 
@@ -206,16 +206,15 @@
         },
 
         // Set positions for a fish to travel between and decide whether it should loop
-        setTravelPoints: function (index, x1, y1, x2, y2, loop = false, loopType = 'bounce') {
+        setTravelPoints: function (index, x1, x2, yLevel, loop = false, loopType = 'bounce') {
             if (x1 >= x2) {
                 log("Invalid x values! x1 must be < x2!")
                 return
             }
             const fish = this.fishList[index]
             fish.x1 = x1
-            fish.y1 = y1
             fish.x2 = x2
-            fish.y2 = y2
+            fish.y = yLevel
             fish.loopEnable = loop
             fish.loopType = loopType
 
@@ -231,8 +230,7 @@
                 newTrail.style.height = height + 'px'
                 newTrail.style.left = fish.x1 + 'px'
 
-                //TODO Fix the y coordinates
-                newTrail.style.bottom = fish.y1 + 'px'
+                newTrail.style.bottom = fish.y + 'px'
 
                 fish.trailEnable = true
                 fish.trail = newTrail
@@ -252,13 +250,12 @@
 
     }
 
-// Get user mouse coordinates
-// function getMouse(event){
-//     return (event.clientX, event.clientY)
-// }
     function movePoints(fish, tank) {
         // Tank detection left and right
+        log(fish.loopType)
         if (fish.loopType === 'bounce') {
+            log(fish.x)
+            log(fish.x1)
             if (fish.x <= fish.x1) {
                 fish.right = true
                 if (fish.orientationRight) {
@@ -307,23 +304,7 @@
             fish.trail.style.width = fish.x + 'px'
         }
 
-        // // Tank detection top and bottom
-        // if (fish.y <= 0) {
-        //     fish.up = true
-        // }
-        //
-        // if (fish.y + fish.element.height >= tank.height) {
-        //     fish.up = false
-        // }
-        // if (fish.up) {
-        //     fish.y += fish.ySpeed
-        // } else {
-        //     fish.y -= fish.ySpeed
-        // }
-
-
         fish.element.style.left = fish.x + 'px'
-        // fish.element.style.bottom = fish.y + 'px'
     }
 
     // Function to move the fish
@@ -460,20 +441,12 @@
         // ------------------------
         // travel points (if specified)
         this.x1 = null
-        this.y1 = null
         this.x2 = null
-        this.y2 = null
 
         this.trailEnable = false
         this.trail = null
         this.loopEnable = false
         this.loopType = 'normal'
-        // ------------------------
-        // Boolean for whether the fish is using a custom animation
-        this.customAnimation = false
-
-        // Behavior of the fish
-        this.behavior = 'default'
 
         // Boolean to reverse orientation for flipping, by default it is assumed the fish forward is to the right and is not
         // upsidedown

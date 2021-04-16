@@ -21,8 +21,12 @@
         <li><a href="">Download</a></li>
     </ul>
 </div>
+
+
+<div class=textBlock>
+    <p class="desc">Fish Tank with default settings and multiple fish and some custom stationary objects</p>
+</div>
 <div class=example_frame>
-    <h2>Fish Tank with default settings and multiple fish and some custom stationary objects</h2>
     <div id="tank1"></div>
 </div>
 <div class="codeBlock"><pre><code class="javascript">const t1 = new Tank(1000, 300, document.getElementById('tank1'));
@@ -35,23 +39,48 @@ t1.addStationaryObj('assets/seaweed.svg', 100, 0, '100px', '200px')
 t1.addFish('assets/fish.svg', 0, 0, 20, 0, 50, false)
 t1.addText("&lth1&gtYou can also add custom text in the tank&lth1&gt", 200, 200)
 t1.updateAllHOrientation()
-t1.enableAllMove()</code></pre></div>
+t1.enableAllMove()</code></pre>
+</div>
+
+<div class=textBlock>
+    <p class="desc">Custom fish (scale and image), water color, tank border and tank size</p>
+</div>
 <div class=example_frame>
-    <h2>Custom fish (scale and image), water color, tank border and tank size</h2>
     <div id="tank2"></div>
 </div>
+
+
+<div class=textBlock><p class="desc">Multiple fish with varying speeds and movement delays</p></div>
 <div class=example_frame>
-    <h2>Multiple fish with varying speeds and movement delays</h2>
     <div id="tank3"></div>
 </div>
+
+
+<div class=textBlock>
+    <p class="desc">Users can define set horizontal points for the fish to travel between,
+        they can configure the fish to "bounce"
+        between the points or simply loop back.
+        The first at the top is bouncing between the set points, where the fish
+        at the bottom is looping.</p>
+</div>
 <div class=example_frame>
-    <h2>Custom fish movement path with custom trails can be used to create animations for things such as loading
-        screens</h2>
+    <div id="m1"></div>
+</div>
+
+<div class=textBlock>
+    <p class="desc">Custom fish movement path with custom trails can be used to create animations for things such as
+        loading
+        screens</p>
+</div>
+<div class=example_frame>
     <div id="tank4"></div>
 </div>
 
+
+<div class=textBlock>
+    <p class="desc">Fishes can be controled with key binds, try moving around with WASD</p>
+</div>
 <div class=example_frame>
-    <h2>Fishes can be controled with key binds, try moving around with WASD</h2>
     <div id="tank5"></div>
 </div>
 </body>

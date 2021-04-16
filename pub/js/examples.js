@@ -14,21 +14,24 @@ t1.addText("<h1>You can also add custom text in the tank<h1>", 200, 200)
 t1.updateAllHOrientation()
 t1.enableAllMove()
 
-// Second fish tank
+//------------------------------------------------------------------------------------------------
+// Initialize tank and render
 const t2 = new Tank(300, 300, document.getElementById('tank2'));
 t2.renderTank()
+
+// Add fish and update properties, and enable movement
 t2.addFish('assets/fish.svg', 0, 0, 20, 0, 50)
 t2.addFish('assets/redFish.svg', 50, 50, 10, 10, 50)
-
 t2.updateWidth(0, '20px')
 t2.updateHeight(0, '50px')
 t2.updateHOrientation(0)
 t2.enableAllMove()
 
+// Change the tank colours
 t2.changeWater('green')
 t2.changeBorder('blue')
 
-
+//------------------------------------------------------------------------------------------------
 // Third fishtank
 const t3 = new Tank(1000, 300, document.getElementById('tank3'));
 t3.renderTank()
@@ -39,9 +42,23 @@ t3.addFish('assets/fish.svg', 0, 60, 5, 5, 20)
 t3.updateAllHOrientation()
 t3.enableAllMove()
 
-// First fish tank example 1000 x 300 scale
+const m1 = new Tank(1000, 300, document.getElementById('m1'));
+m1.renderTank()
+m1.addFish('assets/fish.svg', 0, 0, 20, 0, 50, false)
+m1.addFish('assets/fish.svg', 0, 0, 20, 0, 50, false)
+
+m1.setTravelPoints(0, 0, 500, 50, true, 'normal')
+m1.setTravelPoints(1, 0, 500, 100, true, 'bounce')
+
+m1.updateAllHOrientation()
+m1.enableAllMove()
+
+//------------------------------------------------------------------------------------------------
+// Initialize Tank and render
 const t4 = new Tank(1000, 300, document.getElementById('tank4'));
 t4.renderTank()
+
+// Add objects and fish
 t4.addStationaryObj('assets/rock.svg', 0, 0, '70px', '70px')
 t4.addStationaryObj('assets/rock.svg', 900, 0, '100px', '100px')
 t4.addStationaryObj('assets/rock.svg', 500, 0, '50px', '100px')
@@ -53,10 +70,12 @@ t4.addFish('assets/fish.svg', 0, 40, 20, 10, 20)
 t4.addFish('assets/fish.svg', 0, 40, 20, 10, 50)
 t4.addFish('assets/fish.svg', 0, 60, 5, 5, 20)
 
-t4.setTravelPoints(0, 0, 110, 400, 50, true, 'normal')
-t4.setTrail(0, 'red', 20)
+// Setup the trail and upload orientation
+t4.setTravelPoints(0, 0, 500, 50, true, 'normal')
+t4.setTrail(0, 'red', 50)
 t4.updateAllHOrientation(0)
 
+// Add text and enable movement
 t4.addText("<h1>Loading...<h1>", 0, 110)
 t4.enableAllMove()
 
