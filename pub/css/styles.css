@@ -32,3 +32,17 @@ li a:hover:not(.active) {
 .navbar {
     text-align: center;
 }
+
+.sans{
+    font-family: sans-serif;
+}
+
+.importBlock{
+    width: 50%;
+}
+
+.lineDiv{
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+}
