@@ -168,23 +168,6 @@
             }
         },
 
-        changeAllBehavior: function (behavior) {
-            // Default behavior, fish just move around in the tank
-            if (behavior === 'default') {
-                for (let i = 0; i < this.fishList.length; i++) {
-                    this.fishList[i].behavior = 'default'
-                }
-            }
-            // Fish will avoid the mouse
-            else if (behavior === 'avoid') {
-                for (let i = 0; i < this.fishList.length; i++) {
-                    this.fishList[i].behavior = 'avoid'
-                }
-            } else {
-                log("Invalid behavior please enter: 'default', 'avoid'")
-            }
-        },
-
         // ----------------------------------------------------
         // Functions that manipulates a single fish in the tank
         // index are in order the fish were added in

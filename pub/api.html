@@ -5,6 +5,10 @@
     <title>API</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link rel="stylesheet" type="text/css" href="css/api.css">
+    <!--EXTERNAL HIGHLIGHT JS library used to highlight code blocks-->
+    <link rel="stylesheet" href="css/styles/a11y-dark.css">
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <div class="navbar">
@@ -16,78 +20,216 @@
         <li><a href="">Download</a></li>
     </ul>
 </div>
-
-<h3>Tank Properties</h3>
-<table style="width:100%">
-    <tr>
-        <th>Property</th>
-        <th>Default</th>
-        <th>Type</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <th>width</th>
-        <th>100</th>
-        <th>int</th>
-        <th>width of the tank DOM element in pixels</th>
-    </tr>
-    <tr>
-        <th>height</th>
-        <th>100</th>
-        <th>int</th>
-        <th>height of the tank DOM element in pixels</th>
-    </tr>
-    <tr>
-        <th>tankArea</th>
-        <th>null</th>
-        <th>DOM div</th>
-        <th>the div that represents the fish tank</th>
-    </tr>
-    <tr>
-        <th>renderStatus</th>
-        <th>false</th>
-        <th>bool</th>
-        <th>Boolean that represents whether the tank is rendered or not</th>
-    </tr>
-    <tr>
-        <th>div</th>
-        <th>User must define</th>
-        <th>DOM div</th>
-        <th>DOM element that the fish tank is a child of (if the developer choses to specify a DOM element that the tank
-            should go under)
-        </th>
-    </tr>
-    <tr>
-        <th>color</th>
-        <th>'cornflowerblue'</th>
-        <th>str</th>
-        <th>the background color of the tank DOM element</th>
-    </tr>
-    <tr>
-        <th>fishList</th>
-        <th>[]</th>
-        <th>array</th>
-        <th>array containing the fish DOM elements in this fish tank</th>
-    </tr>
-    <tr>
-        <th>tankObjects</th>
-        <th>[]</th>
-        <th>array</th>
-        <th>array containing the any stationary objects DOM elements in this fish tank</th>
-    </tr>
-</table>
-
-
-<h1>Fish Properties</h1>
+<div class="table_frame">
+    <h1>Tank Configuration</h1>
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Default</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <th>width</th>
+            <th class="mono">100</th>
+            <th class="mono">int</th>
+            <th class="reg">width of the tank DOM element in pixels</th>
+        </tr>
+        <tr>
+            <th>height</th>
+            <th class="mono">100</th>
+            <th class="mono">int</th>
+            <th class="reg">height of the tank DOM element in pixels</th>
+        </tr>
+        <tr>
+            <th>div</th>
+            <th class="reg">N/A</th>
+            <th class="reg">DOM div</th>
+            <th class="reg">DOM element that the fish tank is a child of (if the developer choses to specify a DOM
+                element that the
+                tank
+                should go under)
+            </th>
+        </tr>
+    </table>
+    <h3>Creating a new fish tank example</h3>
+    <div class="codeBlock">
+        <pre><code class="javascript">
+        // Create a new tank with width, height and using the div named 'tank'
+        const fishTank = new Tank(width, height, document.getElementById('tank'))
+        </code></pre>
+    </div>
+</div>
+<h1>Tank Functions</h1>
 <table style="width:100%">
     <tr>
         <th>Function</th>
         <th>Arguments</th>
         <th>Type</th>
-        <th>Description</th>
+        <th class="descW">Description</th>
     </tr>
     <tr>
-
+        <th>renderTank()</th>
+        <th class="mono">None</th>
+        <th class="reg">N/A</th>
+        <th class="reg">Makes the tank visible on the page.</th>
+    </tr>
+    <tr>
+        <th>changeWater()</th>
+        <th class="mono">color</th>
+        <th class="mono">str</th>
+        <th class="reg">Change the water color of the tank with a given color.</th>
+    </tr>
+    <tr>
+        <th>changeBorder</th>
+        <th class="mono">color</th>
+        <th class="mono">str</th>
+        <th class="reg">Change the border color of the tank with a given color.</th>
+    </tr>
+    <tr>
+        <th>changeStyle</th>
+        <th class="mono">style</th>
+        <th class="mono">str</th>
+        <th class="reg">Change the border style of the fish tank with a given style.</th>
+    </tr>
+    <tr>
+        <th>addFish()</th>
+        <th class="mono">fishPath, startX, startY, xSpeed, ySpeed, moveDelay, controlled</th>
+        <th class="mono">str, int, int, int, int, int, bool</th>
+        <th class="reg">Add a fish with the image located at <span class="mono">fishPath</span> to the fish tank. The
+            fish will start at <span class="mono">(startX,
+            startY)</span> and move with speeds of <span class="mono">xSpeed</span> in the x axis and <span
+                    class="mono">ySpeed</span> in the y axis when movement is enabled. The
+            movement delay
+            can be specified by <span class="mono">moveDelay</span>. If <span class="mono">controlled</span> is true
+            then the fish will be user controlled, otherwise it
+            will move around the tank on its own. By default <span class="mono">controlled</span> is false.
+        </th>
+    </tr>
+    <tr>
+        <th>addStationaryObj()</th>
+        <th class="mono">imgPath, x, y, objW, objH</th>
+        <th class="mono">str, int, int, int, int</th>
+        <th class="reg">Add a stationary object located at the image path <span class="mono">imgPath</span>. The object
+            will be located at <span class="mono">(x,y)</span>
+            in the tank with height and widths objW and objH.
+        </th>
+    </tr>
+    <tr>
+        <th>addText()</th>
+        <th class="mono">text, x, y</th>
+        <th class="mono">str, int, int</th>
+        <th class="reg">Add <span class="mono">text</span> to the tank at position<span class="mono">(x,y)</span>.
+        </th>
+    </tr>
+    <tr>
+        <th>enableAllMove()</th>
+        <th class="mono">None</th>
+        <th class="mono">N/A</th>
+        <th class="reg">Enables movement for all fish in the tank.</th>
+    </tr>
+    <tr>
+        <th>updateAllFish()</th>
+        <th class="mono">xSpeed, ySpeed, moveDelay</th>
+        <th class="mono">int, int, int</th>
+        <th class="reg">Changes the speeds and movement delay of all fish in the current tank to
+            <span class="mono">xSpeed, ySpeed, moveDelay</span></th>
+    </tr>
+    <tr>
+        <th>updateAllStartPos()</th>
+        <th class="mono">startX, startY, refresh</th>
+        <th class="mono">int, int, bool</th>
+        <th class="reg">Change the starting positions of all fish in the tank to <span
+                class="mono">(startX, startY)</span>. If <span class="mono">Refresh</span> is true then all the fish
+            will be set back to their starting positions, by default this is false.
+        </th>
+    </tr>
+    <tr>
+        <th>updateAllHOrientation()</th>
+        <th class="mono">None</th>
+        <th class="mono">N/A</th>
+        <th class="reg">Flips the horizontal orientation of all fish in the tank.</th>
+    </tr>
+    <tr>
+        <th>updateAllVOrientation()</th>
+        <th class="mono">None</th>
+        <th class="mono">N/A</th>
+        <th class="reg">Flips the vertical orientation of all fish in the tank.</th>
+    </tr>
+    <tr>
+        <th>updateHOrientation()</th>
+        <th class="mono">index</th>
+        <th class="mono">int</th>
+        <th class="reg">Flips the horizontal orientation of a particular fish at <span class="mono">index</span>. Index
+            order is determined by the order the fish are initialized, for example the first fish will be counted as
+            index 0.
+        </th>
+    </tr>
+    <tr>
+        <th>updateVOrientation()</th>
+        <th class="mono">index</th>
+        <th class="mono">int</th>
+        <th class="reg">Flips the vertical orientation of a particular fish at <span class="mono">index</span>. Index
+            order is determined by the order the fish are initialized, for example the first fish will be counted as
+            index 0.
+        </th>
+    </tr>
+    <tr>
+        <th>updateWidth()</th>
+        <th class="mono">index, width</th>
+        <th class="mono">int, int</th>
+        <th class="reg">Update the <span class="mono">width</span> in pixels of a particular fish at <span class="mono">index</span>.
+            Index
+            order is determined by the order the fish are initialized, for example the first fish will be counted as
+            index 0.
+        </th>
+    </tr>
+    <tr>
+        <th>updateHeight()</th>
+        <th class="mono">index, width</th>
+        <th class="mono">int, int</th>
+        <th class="reg">Update the <span class="mono">height</span> in pixels of a particular fish at <span
+                class="mono">index</span>. Index
+            order is determined by the order the fish are initialized, for example the first fish will be counted as
+            index 0.
+        </th>
+    </tr>
+    <tr>
+        <th>setTravelPoints()</th>
+        <th class="mono">index, x1, x2, yLevel, loop, loopType</th>
+        <th class="mono">int, int, int, int, bool, str</th>
+        <th class="reg">Set two x travel points <span class="mono">x1, x2</span> and a <span class="mono">yLevel</span>for
+            a particular fish at <span
+                    class="mono">index</span> to swim between. Index
+            order is determined by the order the fish are initialized, for example the first fish will be counted as
+            index 0. <span class="mono">loop</span> will determine whether this animation should be repeated, by default
+            it is false. <span class="mono">loopType</span> can be either <span class="mono">'normal'</span> or <span
+                    class="mono">'bounce'</span>. <span class="mono">'normal'</span> means that the fish will teleport
+            back to <span class="mono">x1</span> after reaching <span class="mono">x2</span>. <span class="mono">'bounce'</span>
+            means that the fish will swim back and forth between the two points <span class="mono">x1, x2</span>.
+        </th>
+    </tr>
+    <tr>
+        <th>setTrail()</th>
+        <th class="mono">index, color, height</th>
+        <th class="mono">int, str, int</th>
+        <th class="reg">Set a rectangular trail on the left of the fish at <span class="mono">index.</span> Index
+            order is determined by the order the fish are initialized, for example the first fish will be counted as
+            index 0. This
+            should only be
+            used in conjunction with setTravelPoints, otherwise the trail may not appear. If used with <span
+                    class="mono">'bounce'</span> loop type, the fish will push the trail back inward when it turns
+            around.
+        </th>
+    </tr>
+    <tr>
+        <th>removeTrail()</th>
+        <th class="mono">index</th>
+        <th class="mono">int</th>
+        <th class="reg">Remove the trail of the fish at <span class="mono">index.</span> Index
+            order is determined by the order the fish are initialized, for example the first fish will be counted as
+            index 0.
+        </th>
     </tr>
 </table>
 </body>

@@ -9,3 +9,28 @@ td, th {
     text-align: left;
     padding: 8px;
 }
+
+.descW{
+    width: 600px;
+}
+
+.table_frame {
+
+}
+
+.codeBlock{
+    width: 40%;
+    /*margin: 0 auto;*/
+}
+
+
+
+.mono{
+    font-family: monospace;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.reg{
+    font-weight: normal;
+}
