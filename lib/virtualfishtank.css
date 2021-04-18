@@ -1,0 +1,25 @@
+#tank {
+    border-style: solid;
+    border-color: black;
+    position: relative;
+    background: cornflowerblue;
+    display: inline-block;
+}
+
+#fish {
+    height: 50px;
+    width: 100px;
+    position: absolute;
+}
+
+#stationaryObj {
+    position: absolute;
+}
+
+#textDiv {
+    position: absolute;
+}
+
+#trail {
+    position: absolute;
+}
