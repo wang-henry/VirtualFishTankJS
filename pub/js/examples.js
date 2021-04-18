@@ -105,3 +105,4 @@ t5.addStationaryObj('assets/seaweed.svg', 100, 0, '100px', '200px')
 // Add a fish and allow it to be user controlled
 t5.addFish('assets/fish.svg', 0, 0, 20, 20, 50, true)
 t5.updateAllHOrientation()
+

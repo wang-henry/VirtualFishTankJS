@@ -232,14 +232,14 @@
 
         updateBind: function (index, direction, newKey) {
             if (direction === "right") {
-                this.fishList[index].rightKey = newKey
+                this.fishList[index].rightBind = newKey
             } else if (direction === "left") {
-                this.fishList[index].leftKey = newKey
+                this.fishList[index].leftBind = newKey
             } else if (direction === "up") {
-                this.fishList[index].upKey = newKey
+                this.fishList[index].upBind = newKey
 
             } else if (direction === "down") {
-                this.fishList[index].downKey = newKey
+                this.fishList[index].downBind = newKey
             } else {
                 log("Invalid Direction")
             }
