@@ -38,11 +38,17 @@ li a:hover:not(.active) {
 }
 
 .importBlock{
-    width: 50%;
+    margin: 0 auto;
 }
 
 .lineDiv{
     border-color: black;
     border-style: solid;
     border-width: 1px;
+}
+
+.centreText{
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
 }

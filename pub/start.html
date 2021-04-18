@@ -19,40 +19,43 @@
         <li><a href="">Download</a></li>
     </ul>
 </div>
-
-<h1>Getting Started</h1>
-<div class="sans">To begin using the library, first download it, unzip the files and put them into the desired
-    location. Then load the Javascript file and CSS into your webpage.
-</div>
-<div class="importBlock">
+<div class="centreText">
+    <h1>Getting Started</h1>
+    <div class="sans">To begin using the library, first download it, unzip the files and put them into the desired
+        location. Then load the Javascript file and CSS into your webpage. This library is standalone so you do not need
+        any
+        additional library for it to work.
+    </div>
+    <div class="importBlock">
     <pre><code class="html">
         &ltlink rel="stylesheet" type="text/css" href="css/virtualfishtank.css"&gt
         &ltscript defer type="text/javascript" src='js/virtualfishtank.js'&gt&lt/script&gt</code></pre>
-</div>
-<div class="lineDiv"></div>
-<h1>Basic Fish Tank Setup</h1>
-<div class="sans">First set up a div in your HTML file where you would like the fish tank to be placed, give this fish
-    tank an ID.
-</div>
-<div class="importBlock">
+    </div>
+    <div class="lineDiv"></div>
+    <h1>Basic Fish Tank Setup</h1>
+    <div class="sans">First set up a div in your HTML file where you would like the fish tank to be placed, give this
+        fish
+        tank an ID.
+    </div>
+    <div class="importBlock">
     <pre><code class="html">
         &ltdiv id="tankDiv"&gt&lt/div&gt
     </code></pre>
-</div>
-<div class="sans">In your javascript file create a new tank and pass in the div. This can be done with
-    document.getElementById() as seen below. Make sure to call renderTank so that the tank will be visible
-</div>
-<div class="importBlock">
+    </div>
+    <div class="sans">In your javascript file create a new tank and pass in the div. This can be done with
+        document.getElementById() as seen below. Make sure to call renderTank so that the tank will be visible.
+    </div>
+    <div class="importBlock">
     <pre><code class="javascript">
         // The following creates a 1000x300 tank in the div with ID 'tankDiv'
         const basicTank = new Tank(const t1 = new Tank(1000, 300, document.getElementById('tankDiv'));
         // Call renderTank() so that the tank shows up
         basicTank.renderTank()
     </code></pre>
-</div>
-<div class="sans">Now we can add some basic fish and objects to the tank and enable the movement of the fish
-</div>
-<div class="importBlock">
+    </div>
+    <div class="sans">Now we can add some basic fish and objects to the tank and enable the movement of the fish.
+    </div>
+    <div class="importBlock">
     <pre><code class="javascript">
         // Add a fish with the image 'your/image/path.svg' with initial starting position at (0,0),
         // x speed of 20 and y speed of 20 and movement delay of 50
@@ -64,6 +67,7 @@
         // Add stationary object with the image 'your/image/path.svg' with position (10,0) and width and heights of 20.
         basicTank.addStationaryObj('your/image/path.svg', 10, 0, 20, 20)
     </code></pre>
+    </div>
 </div>
 </body>
 </html>

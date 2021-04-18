@@ -11,15 +11,15 @@ td, th {
 }
 
 .descW{
-    width: 600px;
+    width: 400px;
 }
 
 .table_frame {
-
+    text-align: center;
 }
 
 .codeBlock{
-    width: 40%;
+    text-align: left;
     /*margin: 0 auto;*/
 }
 
