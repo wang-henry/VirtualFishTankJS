@@ -4,7 +4,8 @@ https://cryptic-earth-35104.herokuapp.com
 ### Documentation
 https://cryptic-earth-35104.herokuapp.com/api.html
 ### Getting Started
-To begin using the library, first download it, unzip the files and put them into the desiredlocation. Then load the Javascript file and CSS into your webpage. This library is standalone so you do not need any additional library for it to work.
+Virtual fish tank is a library that allows developers to quickly create fish tanks that can be
+        used for display or game applications. To begin using the library, first download it, unzip the files and put them into the desiredlocation. Then load the Javascript file and CSS into your webpage. This library is standalone so you do not need any additional library for it to work.
 
 ```<link rel="stylesheet" type="text/css" href="css/virtualfishtank.css">```  
 ```<script defer type="text/javascript" src='js/virtualfishtank.js'></script>```  
