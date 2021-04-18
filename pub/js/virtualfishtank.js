@@ -53,7 +53,6 @@
 
         // Change the water color
         changeWater: function (color) {
-            log(this.tankArea)
             this.tankArea.style.background = color
         },
 
@@ -244,16 +243,17 @@
             } else {
                 log("Invalid Direction")
             }
+        },
+
+        getPos: function (index) {
+            return [this.fishList[index].x, this.fishList[index].y]
         }
 
     }
 
     function movePoints(fish, tank) {
         // Tank detection left and right
-        log(fish.loopType)
         if (fish.loopType === 'bounce') {
-            log(fish.x)
-            log(fish.x1)
             if (fish.x <= fish.x1) {
                 fish.right = true
                 if (fish.orientationRight) {
@@ -473,8 +473,6 @@
         this.element.style.left = this.x + 'px'
         this.element.style.bottom = this.y + 'px'
 
-        log(this.element.width)
-        log(this.element.height)
     }
 
     Fish.prototype = {
