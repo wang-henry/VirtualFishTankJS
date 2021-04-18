@@ -165,7 +165,15 @@ t1.enableAllMove()</code></pre>
 </div>
 
 <div class=textBlock>
-    <p class="desc">Fishes can be controled with key binds, try moving around with WASD</p>
+    <p class="desc">Fishes can be controled with key binds, try moving around with WASD. Developers can also fetch the
+        position of any given fish with getPos(), see the corner position of the fish in the top left of the tank. Try
+        moving
+        the fish around and you will see the position being updated. This can be used to create hitbox detection in game
+        applications when combined with the hieight and width attributes that the developer configures the fish
+        with.</p>
+</div>
+<div class=textBlock>
+    <text id="position"></text>
 </div>
 <div class=example_frame>
     <div id="tank5"></div>
@@ -186,6 +194,14 @@ t1.enableAllMove()</code></pre>
         // Add a fish and allow it to be user controlled
         t5.addFish('assets/fish.svg', 0, 0, 20, 20, 50, true)
         t5.updateAllHOrientation()
+
+        // Display the position
+        const textDiv = document.getElementById("position")
+
+        // Timer to update position
+        setInterval(function () {
+            textDiv.innerText = t5.getPos(0)
+        }, 50)
     </code></pre>
 </div>
 

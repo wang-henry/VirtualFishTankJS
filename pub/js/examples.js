@@ -106,3 +106,10 @@ t5.addStationaryObj('assets/seaweed.svg', 100, 0, '100px', '200px')
 t5.addFish('assets/fish.svg', 0, 0, 20, 20, 50, true)
 t5.updateAllHOrientation()
 
+// Display the position
+const textDiv = document.getElementById("position")
+
+// Timer to update position
+setInterval(function () {
+    textDiv.innerText = t5.getPos(0)
+}, 50)
