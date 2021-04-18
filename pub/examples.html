@@ -51,11 +51,47 @@ t1.enableAllMove()</code></pre>
 <div class=example_frame>
     <div id="tank2"></div>
 </div>
+<div class="codeBlock">
+    <pre><code class="javascript">
+        // Initialize tank and render
+        const t2 = new Tank(300, 300, document.getElementById('tank2'));
+        t2.renderTank()
+
+        // Add fish and update properties, and enable movement
+        t2.addFish('assets/fish.svg', 0, 0, 20, 0, 50)
+        t2.addFish('assets/redFish.svg', 50, 50, 10, 10, 50)
+        t2.updateWidth(0, '20px')
+        t2.updateHeight(0, '50px')
+        t2.updateHOrientation(0)
+        t2.enableAllMove()
+
+        // Change the tank colours
+        t2.changeWater('green')
+        t2.changeBorder('blue')
+    </code></pre>
+</div>
 
 
 <div class=textBlock><p class="desc">Multiple fish with varying speeds and movement delays</p></div>
 <div class=example_frame>
     <div id="tank3"></div>
+</div>
+<div class="codeBlock">
+    <pre><code class="javascript">
+        // Initialize tank and render
+        const t3 = new Tank(1000, 300, document.getElementById('tank3'));
+        t3.renderTank()
+
+        // Add fish and update orientation
+        t3.addFish('assets/fish.svg', 0, 20, 40, 0, 20)
+        t3.addFish('assets/fish.svg', 0, 40, 20, 10, 20)
+        t3.addFish('assets/fish.svg', 0, 40, 20, 10, 50)
+        t3.addFish('assets/fish.svg', 0, 60, 5, 5, 20)
+        t3.updateAllHOrientation()
+
+        // Enable movement
+        t3.enableAllMove()
+    </code></pre>
 </div>
 
 
@@ -69,6 +105,27 @@ t1.enableAllMove()</code></pre>
 <div class=example_frame>
     <div id="m1"></div>
 </div>
+<div class="codeBlock">
+    <pre><code class="javascript">
+        // Create new tank and render
+        const m1 = new Tank(1000, 300, document.getElementById('m1'));
+        m1.renderTank()
+
+        // Add fish
+        m1.addFish('assets/fish.svg', 0, 0, 20, 0, 50, false)
+        m1.addFish('assets/fish.svg', 0, 0, 20, 0, 50, false)
+
+        // Set first fish to normal loop
+        m1.setTravelPoints(0, 0, 500, 50, true, 'normal')
+
+        // Set second fish to bounce loop
+        m1.setTravelPoints(1, 0, 500, 100, true, 'bounce')
+
+        // Flip all horizontal orientation and enable movement
+        m1.updateAllHOrientation()
+        m1.enableAllMove()
+    </code></pre>
+</div>
 
 <div class=textBlock>
     <p class="desc">Custom fish movement path with custom trails can be used to create animations for things such as
@@ -78,13 +135,58 @@ t1.enableAllMove()</code></pre>
 <div class=example_frame>
     <div id="tank4"></div>
 </div>
+<div class="codeBlock">
+    <pre><code class="javascript">
+        // Initialize Tank and render
+        const t4 = new Tank(1000, 300, document.getElementById('tank4'));
+        t4.renderTank()
 
+        // Add objects and fish
+        t4.addStationaryObj('assets/rock.svg', 0, 0, '70px', '70px')
+        t4.addStationaryObj('assets/rock.svg', 900, 0, '100px', '100px')
+        t4.addStationaryObj('assets/rock.svg', 500, 0, '50px', '100px')
+        t4.addStationaryObj('assets/seaweed.svg', 500, 0, '100px', '100px')
+        t4.addStationaryObj('assets/seaweed.svg', 100, 0, '100px', '200px')
+        t4.addFish('assets/fish.svg', 0, 100, 5, 0, 100)
+        t4.addFish('assets/fish.svg', 0, 20, 40, 0, 20)
+        t4.addFish('assets/fish.svg', 0, 40, 20, 10, 20)
+        t4.addFish('assets/fish.svg', 0, 40, 20, 10, 50)
+        t4.addFish('assets/fish.svg', 0, 60, 5, 5, 20)
+
+        // Setup the trail and upload orientation
+        t4.setTravelPoints(0, 0, 500, 50, true, 'normal')
+        t4.setTrail(0, 'red', 50)
+        t4.updateAllHOrientation(0)
+
+        // Add text and enable movement
+        t4.addText("&lth1&rtLoading...&lth1&gt", 0, 110)
+        t4.enableAllMove()
+    </code></pre>
+</div>
 
 <div class=textBlock>
     <p class="desc">Fishes can be controled with key binds, try moving around with WASD</p>
 </div>
 <div class=example_frame>
     <div id="tank5"></div>
+</div>
+<div class="codeBlock">
+    <pre><code class="javascript">
+        // Create new tank and render
+        const t5 = new Tank(1000, 300, document.getElementById('tank5'));
+        t5.renderTank()
+
+        // Add some stationary objects
+        t5.addStationaryObj('assets/rock.svg', 0, 0, '70px', '70px')
+        t5.addStationaryObj('assets/rock.svg', 900, 0, '100px', '100px')
+        t5.addStationaryObj('assets/rock.svg', 500, 0, '50px', '100px')
+        t5.addStationaryObj('assets/seaweed.svg', 500, 0, '100px', '100px')
+        t5.addStationaryObj('assets/seaweed.svg', 100, 0, '100px', '200px')
+
+        // Add a fish and allow it to be user controlled
+        t5.addFish('assets/fish.svg', 0, 0, 20, 20, 50, true)
+        t5.updateAllHOrientation()
+    </code></pre>
 </div>
 </body>
 </html>
