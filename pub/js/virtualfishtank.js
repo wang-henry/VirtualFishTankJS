@@ -229,6 +229,21 @@
         removeTrail: function (index) {
             this.trail = null
             this.trailEnable = false
+        },
+
+        updateBind: function (index, direction, newKey) {
+            if (direction === "right") {
+                this.fishList[index].rightKey = newKey
+            } else if (direction === "left") {
+                this.fishList[index].leftKey = newKey
+            } else if (direction === "up") {
+                this.fishList[index].upKey = newKey
+
+            } else if (direction === "down") {
+                this.fishList[index].downKey = newKey
+            } else {
+                log("Invalid Direction")
+            }
         }
 
     }
